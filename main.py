@@ -86,10 +86,8 @@ def thrustToPwm(thrust, voltage):
     pwm : The pwm signal in microseconds
     '''
     thrustData, pwmData = getMotorData('thrust', voltage)
-    absolute_difference_function = lambda list_value : abs(list_value - thrust)
-    closestThrust = min(thrustData, key=absolute_difference_function)
-    thrustIndex = thrustData.index(closestThrust)
-    pwm = int(pwmData[thrustIndex])
+    thrust_index = findNearestInt(thrustData, thrust)
+    pwm = int(pwmData[thrust_index])
     return pwm
 
 
