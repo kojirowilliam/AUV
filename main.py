@@ -1,35 +1,99 @@
 # from board import SCL, SDA
 # import busio
 # from adafruit_pca9685 from PCA9685
-import csv
 import pandas as pd
 
-
-def rpm2pwn(rpm, voltage):
+def pwmToDutyCycle(pwm, frequency):
     '''
-    Converts the desired RPM to a PWN signal depending on the voltage.
+    Converts 'pwm' to a duty cycle
+    :parameters:
+    pwm: A pwm value in microseconds
+    frequency: The frequency the PCA 9685 is running at
+    :return:
+    dutyCycle: The duty cycle of the PWM signal
+    '''
+    duration = 1/frequency
+    duration *= 10^6
+    dutyCycle = duration*pwm
+    return dutyCycle
+
+def findNearestInt(lis, integer):
+    '''
+    Returns the index of the number closest to 'integer' in the list 'lis'
+    :param lis: The list that you want to find the closest number to 'integer' in
+    :param integer: The number you want to find in 'lis'
+    :return:
+    int_index: The index of the integer in 'lis' closest to 'integer'
+    '''
+    absolute_difference_function = lambda list_value: abs(list_value - integer)
+    closest_int = min(lis, key=absolute_difference_function)
+    int_index = lis.index(closest_int)
+    return int_index
+
+
+def getMotorData(valueType, voltage):
+    '''
+    Returns a list of the PWM data and correlating RPM data from the voltage provided in the
+    motor documentation
+    :parameters:
+    valueType: The type of value. Either 'thrust' or 'rpm'
+    voltage: The voltage the motor is running at
+    :return:
+    motorData: A list of the 'valueType' correlating with the pwmData list
+    pwmData: A list of the possible PWM values in microseconds for the motor
+
+    '''
+    parameters = ['PWM', 'RPM', 'Current', 'Voltage', 'Power', 'Force', 'Efficiency']
+
+    if voltage == 18:
+        data = pd.read_csv("18voltage.csv", usecols=parameters)
+        pwmData = [int(pwm) for pwm in data['PWM']]
+        if valueType == 'rpm':
+            motorData = [int(speed) for speed in data['RPM']]
+        else:
+            motorData = [int(force) for force in data['Force']]
+        return motorData, pwmData
+
+    raise NotImplementedError("Inputted Voltage is Not Implemented!")
+
+
+def rpmToPwm(rpm, voltage):
+    '''
+    Converts the desired RPM to a pwm signal depending on the voltage.
 
     :parameters:
     rpm : The rpm that you want the motor to move at
     voltage : The current voltage supplied to the motor
 
     :return:
-    pwn : The PWN signal in microseconds
+    pwm : The pwm signal in microseconds
     '''
-    if voltage == 18:
-        parameters = ['PWM', 'RPM', 'Current', 'Voltage', 'Power', 'Force', 'Efficiency']
-        data = pd.read_csv("18voltage.csv", usecols=parameters)
-        rpmData = [int(speed) for speed in data['RPM']]
-        pwnData = [int(pwn) for pwn in data['PWM']]
-        absolute_difference_function = lambda list_value : abs(list_value - rpm)
-        closest_rpm = min(rpmData, key=absolute_difference_function)
-        rpm_index = rpmData.index(closest_rpm)
-        pwn = int(pwnData[rpm_index])
-        return pwn
-    raise Exception("Voltage of Unknown Type Given")
+    rpmData, pwmData = getMotorData('rpm', voltage)
+    rpm_index = findNearestInt(rpmData, rpm)
+    pwm = int(pwmData[rpm_index])
+    return pwm
 
 
-def i2cToPwn(motor, value, valueType, SCL, SDA):
+def thrustToPwm(thrust, voltage):
+    '''
+    Converts the desired thrust to a pwm signal depending on the voltage.
+
+    :parameters:
+    thrust : The amount of thrust that you want the motor to push
+    voltage : The current voltage supplied to the motor
+
+    :return:
+    pwm : The pwm signal in microseconds
+    '''
+    thrustData, pwmData = getMotorData('thrust', voltage)
+    absolute_difference_function = lambda list_value : abs(list_value - thrust)
+    closestThrust = min(thrustData, key=absolute_difference_function)
+    thrustIndex = thrustData.index(closestThrust)
+    pwm = int(pwmData[thrustIndex])
+    return pwm
+
+
+def spinMotor(motor, value, valueType, SCL, SDA):
     '''
     Sends i2c data to the Adafruit PCA 9685 board, which generates a PWM signal to the motors.
 
@@ -40,7 +104,6 @@ def i2cToPwn(motor, value, valueType, SCL, SDA):
     SCL : Connection to the SCL data on the Jetson
     SDA : Connection to the SDA data on the Jetson
     '''
-    #TODO:WILL Assuming the voltage will be at 18
     FREQUENCY = 400 # The max update rate of the Blue Robotics Basic ESC
     # i2c_bus = busio.I2C(SCL, SDA)
     # pca = PCA9685(i2c_bus)
@@ -49,23 +112,17 @@ def i2cToPwn(motor, value, valueType, SCL, SDA):
     #TODO:WILL Create other tests
 
     if valueType == "rpm":
-        #TODO WILL You were trying to figure out the duty cycle
-        # 2**16 * max_pulsewidth in microseconds
-        duty_cycle = rpm2pwn(value, 18) # 18 stands for voltage
+        duty_cycle = pwmToDutyCycle(rpmToPwm(value, 18), 400) # 18 stands for voltage
 
     else:
-        duty_cycle =
+        duty_cycle = pwmToDutyCycle(thrustToPwm(value, 18), 400) # 18 stands for voltage
+
     pca.frequency = FREQUENCY
-    pca.channels[motor].duty_cycle = dut
-
-
+    pca.channels[motor].duty_cycle = duty_cycle # Might need to be in hexadecimal
 
 
 if __name__ == '__main__':
-    rpm2pwn(3600, 18)
+    rpmToPwm(3600, 18)
 
 
 
-
-    # pca.frequency = 60 #Not really sure what this does
-    # pca.channels[0].duty_cycle = 0x7FFF #Not really sure what this does
