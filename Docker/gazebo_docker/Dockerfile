@@ -29,4 +29,5 @@ RUN ls
 # ENTRYPOINT ["/gzserver_entrypoint.sh"]
 
 # launch ros package
-CMD ["roslaunch", "uuv_gazebo_worlds", "auv_underwater_world.launch"]
+# RUN roslaunch uuv_gazebo_worlds auv_underwater_world.launch
+# CMD ["roslaunch", "uuv_gazebo_worlds", "auv_underwater_world.launch"]

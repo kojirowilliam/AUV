@@ -12,8 +12,3 @@ docker run --gpus all -e NVIDIA_DRIVER_CAPABILITIES=all \
 -v /tmp/.X11-unix/:/tmp/.X11-unix/ \
 -v="/tmp/.gazebo/:/root/.gazebo/" \
 --name $CONTAINER_NAME $IMAGE_NAME:$tag
-
-image_id=$(docker ps -ql)
-docker stop image_id
-docker rm image_id
-xhost -local:root
