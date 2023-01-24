@@ -4,7 +4,14 @@ FROM ros:melodic
 # RUN apt-get 
 
 # install uuv_simulator package
+
+
 RUN apt-get update && apt install -y ros-melodic-uuv-simulator
+
+# RUN sudo sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list' wget https://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add - && \
+#     sudo apt-get update && \
+#     sudo apt-get install -y gazebo9 && \
+#     sudo apt-get install -y libgazebo9-dev
 
 RUN echo 'Etc/UTC' > /etc/timezone && \
     rm -r /etc/localtime && \
@@ -37,7 +44,7 @@ RUN mkdir ~/catkin_ws && cd ~/catkin_ws && mkdir src && cd src && \
 
 EXPOSE 11345
 
-RUN ls
+# RUN ls
 
 # ENTRYPOINT ["/gzserver_entrypoint.sh"]
 

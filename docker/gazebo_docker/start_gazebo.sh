@@ -7,7 +7,7 @@ read tag
 xhost +local:root
 docker_version=0
 
-docker run --gpus all -e NVIDIA_DRIVER_CAPABILITIES=all \
+sudo docker run --gpus all -e NVIDIA_DRIVER_CAPABILITIES=all \
 --privileged -e DISPLAY=$DISPLAY -it \
 -v /tmp/.X11-unix/:/tmp/.X11-unix/ \
 -v="/tmp/.gazebo/:/root/.gazebo/" \
