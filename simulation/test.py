@@ -25,9 +25,9 @@ def callback_log(data):
 	if not done: 
 		wp1 = Waypoint()
 		move_point = rospy.ServiceProxy('rexrov2/go_to', GoTo)
-		wp1.point.x = 50 + position.x
+		wp1.point.x = -50 + position.x
 		wp1.point.y = 0 + position.y
-		wp1.point.z = 10 + position.z
+		wp1.point.z = 0 + position.z
 		wp1.max_forward_speed = 10.0
 		done = True
 		move_point(wp1, 1.0, 'cubic')

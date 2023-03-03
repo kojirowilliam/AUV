@@ -23,7 +23,7 @@ else
 {
 waypoint: {
 header: {seq: 0, stamp: now},
-point: {x: 20.0, y: 10.0, z: -100.0},
+point: {x: 10.0, y: -50.0, z: -10},
 max_forward_speed: 10.0,
 heading_offset: 0.0,
 use_fixed_heading: false,
