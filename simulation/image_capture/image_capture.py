@@ -11,6 +11,9 @@ import cv2 as cv
 def callback(data):
     try:
       cv_image = bridge.imgmsg_to_cv2(data, "passthrough")
+      img_blur = cv2.GuassianBlur(cv_image, (3,3), 0)
+      edges = cv2.Canny(image=image_blur, threshold1 = 100, threshold2 = 200)
+      cv2.imshow('edges', edges)
     except CvBridgeError as e:
       print(e)
     

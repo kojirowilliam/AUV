@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Center of buoyancy -->
+    <xacro:property name="mantaray_cob" value="0 0 0"/>
+
+    <!-- Vehicle's actual volume (Gazebo cannot compute the volume out of the mesh) -->
+    <xacro:property name="mantaray_volume" value="1.83826"/> <!-- Taken from RexRov2-->
+
+    <!-- Describing the dimensions of the vehicle's bounding box -->
+    <xacro:property name="mantaray_length" value="2.6"/><!-- Taken from RexRov2-->
+    <xacro:property name="mantaray_width"  value="1.5"/><!-- Taken from RexRov2-->
+    <xacro:property name="mantaray_height" value="1.6"/><!-- Taken from RexRov2-->
+
+    <xacro:macro name="mantaray_hydro_model" params="namespace">
+      <!-- List of hydrodynamic models this robot's links -->
+      <link name="${namespace}/base_link">
+        <!-- This flag will make the link neutrally buoyant -->
+        <neutrally_buoyant>0</neutrally_buoyant>
+
+        <!-- Link's volume -->
+        <volume>${mantaray_volume}</volume>
+
+        <!-- Link's bounding box, it is used to recalculate the immersed
+        volume when close to the surface.
+        This is a workaround the invalid bounding box given by Gazebo-->
+        <box>
+          <width>${mantaray_width}</width>
+          <length>${mantaray_length}</length>
+          <height>${mantaray_height}</height>
+        </box>
+
+        <!-- Center of buoyancy -->
+        <center_of_buoyancy>${mantaray_cob}</center_of_buoyancy>
+
+        <!--
+        Choose one of the hydrodynamic models below, all are based on
+        Fossen's equation of motion for underwater vehicles
+
+        Reference:
+        [1] Fossen, Thor I. Handbook of marine craft hydrodynamics and motion
+            control. John Wiley & Sons, 2011.
+        -->
+
+        <!-- 1) Fossen's equation of motion -->
+        <hydrodynamic_model>
+          <type>fossen</type>
+          <added_mass> <!-- Taken from RexRov2-->
+            779.79 -6.8773 -103.32  8.5426 -165.54 -7.8033
+           -6.8773    1222   51.29  409.44 -5.8488  62.726
+           -103.32   51.29  3659.9  6.1112 -386.42  10.774
+            8.5426  409.44  6.1112   534.9 -10.027  21.019
+           -165.54 -5.8488 -386.42 -10.027  842.69 -1.1162
+           -7.8033  62.726  10.775  21.019 -1.1162  224.32
+       </added_mass>
+          <!--
+            The linear damping coefficients can be provided as a diagonal (6 elements)
+            or a full matrix (36 coefficients), like the added-mass coefficients above
+          -->
+          <linear_damping>
+            -74.82 -69.48 -728.4 -268.8 -309.77 -105
+          </linear_damping>
+          <!--
+            The linear damping coefficients proportional to the forward speed
+            can be provided as a diagonal (6 elements) or a full matrix (36 coefficients),
+            like the added-mass coefficients above.
+            This matrix is mostly useful for slender bodies (e.g. AUVs with torpedo shape)
+          -->
+          <!-- <linear_damping_forward_speed>
+            0 0 0 0 0 0
+          </linear_damping_forward_speed> -->
+          <!--
+            The quadratic damping coefficients can be provided as a diagonal (6 elements)
+            or a full matrix (36 coefficients), like the added-mass coefficients above
+          -->
+          <quadratic_damping>
+            -748.22 -992.53 -1821.01 -672 -774.44 -523.27
+          </quadratic_damping>
+
+          <!--
+            In case you want to model a simple surface vessel, you can use the
+            implementation of linear (small angle) theory for boxed shaped vessels
+            by providing the following parameters. If you omit the area of the
+            water level plane area, it will be calculated from the bounding box
+            parameters. Uncomment the lines below in case you are simulating a
+            surface vessel.
+            For more details on these parameters and the computation of buoyancy
+            for vessels using this theory, check:
+              [1] Lecture Notes  TTK 4190 Guidance and Control of Vehicles (T. I. Fossen)
+                  http://www.fossen.biz/wiley/Ch4.pdf
+              [2] Fossen, Thor I. Handbook of marine craft hydrodynamics and motion
+                  control. John Wiley & Sons, 2011.
+          -->
+          
+          <!--
+          <metacentric_width>0.0</metacentric_width>
+          <metacentric_length>0.0</metacentric_length>
+          <submerged_height>0.0</submerged_height>
+          -->
+        </hydrodynamic_model>
+
+        <!-- 2) This computes the added-mass and damping parameters for a sphere
+        in the fluid with the given radius -->
+        <!-- <hydrodynamic_model>
+          <type>sphere</type>
+          <radius>0</radius>
+        </hydrodynamic_model> -->
+
+      </link>
+    </xacro:macro>
+
+</robot>
