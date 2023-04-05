@@ -15,7 +15,7 @@
 
   <xacro:property name="mass" value="1862.87"/> <!-- From RexRov2 -->
   <!-- Center of gravity -->
-  <xacro:property name="cog" value="0 0 0"/>
+  <xacro:property name="cog" value="0.003631 -0.019556 0.015242"/> <!-- A little forward and down -->
   <!-- Fluid density -->
   <xacro:property name="rho" value="1028"/>
 
@@ -40,8 +40,9 @@
         <inertial>
           <mass value="${mass}" />
           <origin xyz="${cog}" rpy="0 0 0"/>
-          <inertia ixx="525.39" ixy="1.44" ixz="33.41" iyy="794.20" iyz="2.6" izz="691.23"/> <!-- From RexRov2 -->
+          <inertia ixx="1.313975" ixy="-0.008298" ixz=".021249" iyy="1.633282" iyz="0.0002475" izz="0.546458"/> <!-- From RexRov2 -->
       </inertial>
+      <!-- Units are in kg * meters^2 -->
 
         <visual name='visual'>
           <origin xyz="0 0 0.204636" rpy="0 0 0"/>
