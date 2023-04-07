@@ -70,7 +70,6 @@
     </xacro:thruster_module_first_order_basic_fcn_macro>
   </xacro:macro> -->
 
-
   <!-- Ask david about dynaic time constant -->
   <!-- Look at the datasheet for rotor constant -->
 
