@@ -16,7 +16,7 @@
     be initialized in the actuators.xacro file.
   -->
 
-  <xacro:macro name="thruster_macro" params="namespace thruster_id *origin">
+  <!-- <xacro:macro name="thruster_macro" params="namespace thruster_id *origin">
     <joint name="${namespace}/thruster_${thruster_id}_joint" type="continuous">
       <xacro:insert_block name="origin"/>
       <axis xyz="0 0 1"/>
@@ -56,9 +56,9 @@
         </conversion>
       </plugin>
     </gazebo>
-  </xacro:macro>
+  </xacro:macro> -->
 
-  <!-- <xacro:macro name="thruster_macro"
+  <xacro:macro name="thruster_macro"
     params="namespace thruster_id *origin">
     <xacro:thruster_module_first_order_basic_fcn_macro
       namespace="${namespace}"
@@ -68,7 +68,7 @@
       rotor_constant="0.026546960744430276">
       <xacro:insert_block name="origin"/>
     </xacro:thruster_module_first_order_basic_fcn_macro>
-  </xacro:macro> -->
+  </xacro:macro>
 
   <!-- Ask david about dynaic time constant -->
   <!-- Look at the datasheet for rotor constant -->
