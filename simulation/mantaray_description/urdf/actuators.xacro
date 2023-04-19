@@ -26,24 +26,20 @@
     </xacro:thruster_macro>
   
     <xacro:thruster_macro namespace="${namespace}" thruster_id="4">
-      <origin xyz="-0.25 0.15 0.244899" rpy="${90*d2r} 0 ${30*d2r}"/>
+      <origin xyz="-0.222 0.155 0.109" rpy="${90*d2r} 0 ${300*d2r}"/>
     </xacro:thruster_macro>
   
     <xacro:thruster_macro namespace="${namespace}" thruster_id="5">
-      <origin xyz="0.25 0.15 0.244899" rpy="${90*d2r} 0 ${330*d2r}"/>
-    </xacro:thruster_macro>
-  
-    <!-- <xacro:thruster_macro namespace="${namespace}" thruster_id="5">
-      <origin xyz="-0.193622 0.207182 0.145563" rpy="0 0 ${-25*d2r}"/>
+      <origin xyz="0.222 0.155 0.109" rpy="${90*d2r} 0 ${240*d2r}"/>
     </xacro:thruster_macro>
 
     <xacro:thruster_macro namespace="${namespace}" thruster_id="6">
-      <origin xyz="-0.281372 -0.150723 0.145563" rpy="0 0 ${-25*d2r}"/>
+      <origin xyz="-0.222 -0.155 0.109" rpy="${90*d2r} 0 ${60*d2r}"/>
     </xacro:thruster_macro>
 
     <xacro:thruster_macro namespace="${namespace}" thruster_id="7">
-      <origin xyz="0.193622 -0.200534 0.145563" rpy="0 0 ${-25*d2r}"/>
-    </xacro:thruster_macro> -->
+      <origin xyz="0.222 -0.155 0.109" rpy="${90*d2r} 0 ${120*d2r}"/>
+    </xacro:thruster_macro>
 
     <!-- Instantiate fins, if necessary -->
 
