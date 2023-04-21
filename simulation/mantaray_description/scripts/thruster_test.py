@@ -8,8 +8,6 @@ import math
 import time
 
 from uuv_gazebo_ros_plugins_msgs.msg import FloatStamped
-from nav_msgs.msg import Odometry
-from std_msgs.msg import String, Header
 
 def thruster_publisher():
     rospy.init_node('thruster_tester_pub', anonymous=True)
@@ -25,50 +23,52 @@ def thruster_publisher():
 
     time_last = time.time()
 
+
     while not rospy.is_shutdown():
         
         t = time.time()
 
         t0 = FloatStamped()
         t0.header.stamp = rospy.Time.now()
-        t0.data = 1000
+        t0.data = 100 # This is what controls how much thrust is exerted
         pub0.publish(t0)
         time.sleep(5)
         t1 = FloatStamped()
         t1.header.stamp = rospy.Time.now()
-        t1.data = 1000
+        t1.data = 200
         pub1.publish(t1)
         time.sleep(5)
         t2 = FloatStamped()
         t2.header.stamp = rospy.Time.now()
-        t2.data = 1000
+        t2.data = 300
         pub2.publish(t2)
         time.sleep(5)
         t3 = FloatStamped()
         t3.header.stamp = rospy.Time.now()
-        t3.data = 1000
+        t3.data = 400
         pub3.publish(t3)
         time.sleep(5)
         t4 = FloatStamped()
         t4.header.stamp = rospy.Time.now()
-        t4.data = 1000
+        t4.data = 500
         pub4.publish(t4)
         time.sleep(5)
         t5 = FloatStamped()
         t5.header.stamp = rospy.Time.now()
-        t5.data = 1000
+        t5.data = 600
         pub5.publish(t5)
         time.sleep(5)
         t6 = FloatStamped()
         t6.header.stamp = rospy.Time.now()
-        t6.data = 1000
+        t6.data = 700
         pub5.publish(t6)
         time.sleep(5)
         t7 = FloatStamped()
         t7.header.stamp = rospy.Time.now()
-        t7.data = 1000
+        t7.data = 800
         pub5.publish(t7)
         time.sleep(20)
+        
 
         rate = rospy.Rate(10) # 10hz
         rate.sleep()
