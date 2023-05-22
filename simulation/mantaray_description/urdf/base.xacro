@@ -41,10 +41,11 @@
           <mass value="${mass}" />
           <origin xyz="${cog}" rpy="0 0 0"/>
           <inertia ixx="1.313975" ixy="-0.008298" ixz=".021249" iyy="1.633282" iyz="0.0002475" izz="0.546458"/> <!-- From RexRov2 -->
-      </inertial>
+        </inertial>
       <!-- Units are in kg * meters^2 -->
 
         <visual name='visual'>
+          <transparency>0.8</transparency>
           <origin xyz="0 0 0.204636" rpy="0 0 0"/>
           <geometry>
             <mesh filename="${visual_mesh_file}" scale="1 1 1" />

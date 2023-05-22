@@ -24,7 +24,7 @@
       <child link="${namespace}/thruster_${thruster_id}"/>
     </joint>
     <link name="${namespace}/thruster_${thruster_id}">
-      <xacro:box_inertial x="0" y="0" z="0" mass="0.001">
+      <xacro:box_inertial x="113" y="97" z="97" mass="0.344"> <!--Mass in air is 344 g and in water is 156g-->
         <origin xyz="0 0 0" rpy="0 0 0"/>
       </xacro:box_inertial>
       <visual>
