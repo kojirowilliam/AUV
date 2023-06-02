@@ -9,11 +9,11 @@
     -->
 
     <!-- Taken from RexRov2-->
-    <xacro:thruster_macro namespace="${namespace}" thruster_id="0"> <!-- I inputed-->
+    <xacro:thruster_macro namespace="${namespace}" thruster_id="0">
       <origin xyz="-0.25 -0.34 0.244899" rpy="0 ${90*d2r} 0"/>
     </xacro:thruster_macro>
   
-    <!-- <xacro:thruster_macro namespace="${namespace}" thruster_id="1">
+    <xacro:thruster_macro namespace="${namespace}" thruster_id="1">
       <origin xyz="0.25 -0.34 0.244899" rpy="0 ${90*d2r} 0"/> 
     </xacro:thruster_macro>
     <xacro:thruster_macro namespace="${namespace}" thruster_id="2">
@@ -38,7 +38,7 @@
 
     <xacro:thruster_macro namespace="${namespace}" thruster_id="7">
       <origin xyz="0.222 -0.155 0.109" rpy="${90*d2r} 0 ${120*d2r}"/>
-    </xacro:thruster_macro> -->
+    </xacro:thruster_macro>
 
     <!-- Instantiate fins, if necessary -->
 

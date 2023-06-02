@@ -11,19 +11,27 @@ import cv2 as cv
 def callback(data):
     try:
       cv_image = bridge.imgmsg_to_cv2(data, "passthrough")
-      img_blur = cv2.GuassianBlur(cv_image, (3,3), 0)
-      edges = cv2.Canny(image=image_blur, threshold1 = 100, threshold2 = 200)
-      cv2.imshow('edges', edges)
+      frame = cv.resize(cv_image, (400,300), interpolation=cv.INTER_AREA)
+      img_blur = cv.GaussianBlur(frame, (3,3), 0)
+      edges = cv.Canny(image=img_blur, threshold1 = 100, threshold2 = 200)
+      cv.imshow('edges', edges)
     except CvBridgeError as e:
       print(e)
     
     (rows,cols,channels) = cv_image.shape
-    gray = cv.cvtColor(cv_image, cv.COLOR_BGR2GRAY)
+    gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
     # Display the resulting frame
-    cv.imshow('frame', gray)
+
+    orb = cv.ORB_create()
+    orb.setEdgeThreshold(5)
+    kp = orb.detect(gray,None)
+    img2 = cv.drawKeypoints(gray, kp, None, color=(0,255,0), flags=0)
+    cv.imshow('Input', img2)
+
+    # cv.imshow('frame', gray)
     
     rospy.loginfo("I heard %s", gray)
-    cv.waitKey()
+    cv.waitKey(1)
     
 def listener():
     rospy.init_node('image_capture', anonymous=True)
@@ -31,6 +39,7 @@ def listener():
     rospy.Subscriber("/rexrov2/rexrov2/camera/camera_image", Image, callback)
 
     # spin() simply keeps python from exiting until this node is stopped
+    rospy.sleep(0.01)
     rospy.spin()
 
 if __name__ == '__main__':
