@@ -65,5 +65,5 @@
     	<arg name="namespace" value="$(arg namespace)"/>
   </include>
 
-  <node name="rviz" pkg="rviz" type="rviz" output="screen"></node>
+  <!-- <node name="rviz" pkg="rviz" type="rviz" output="screen"></node> -->
 </launch>
