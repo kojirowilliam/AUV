@@ -75,18 +75,22 @@ def to_euler_angles (orientation):
 
     return euler
 
-def thruster_publisher():
+def thruster_publisher(name):
     global position
     global orientation
     rospy.init_node('lit', anonymous=True)
 
-    rospy.Subscriber('rexrov2/pose_gt', Odometry, pose_listener)    
-    pub0 = rospy.Publisher('/rexrov2/thrusters/0/input', FloatStamped, queue_size=10)
-    pub1 = rospy.Publisher('/rexrov2/thrusters/1/input', FloatStamped, queue_size=10)
-    pub2 = rospy.Publisher('/rexrov2/thrusters/2/input', FloatStamped, queue_size=10)
-    pub3 = rospy.Publisher('/rexrov2/thrusters/3/input', FloatStamped, queue_size=10)
-    pub4 = rospy.Publisher('/rexrov2/thrusters/4/input', FloatStamped, queue_size=10)
-    pub5 = rospy.Publisher('/rexrov2/thrusters/5/input', FloatStamped, queue_size=10)
+    rospy.Subscriber('/' + name + '/pose_gt', Odometry, pose_listener)    
+    pub0 = rospy.Publisher('/' + name + '/thrusters/0/input', FloatStamped, queue_size=10)
+    pub1 = rospy.Publisher('/' + name + '/thrusters/1/input', FloatStamped, queue_size=10)
+    pub2 = rospy.Publisher('/' + name + '/thrusters/2/input', FloatStamped, queue_size=10)
+    pub3 = rospy.Publisher('/' + name + '/thrusters/3/input', FloatStamped, queue_size=10)
+    pub4 = rospy.Publisher('/' + name + '/thrusters/4/input', FloatStamped, queue_size=10)
+    pub5 = rospy.Publisher('/' + name + '/thrusters/5/input', FloatStamped, queue_size=10)
+    pub6 = rospy.Publisher('/' + name + '/thrusters/6/input', FloatStamped, queue_size=10)
+    pub7 = rospy.Publisher('/' + name + '/thrusters/5/input', FloatStamped, queue_size=10)
+    
+    
 
     time_last = time.time()
 

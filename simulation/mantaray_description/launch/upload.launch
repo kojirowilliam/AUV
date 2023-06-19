@@ -57,10 +57,13 @@
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen">
       <param name="robot_description" value="/$(arg namespace)/robot_description" />
     </node>
+
   </group>
 
   <!-- Publish state and tf for in relation to the world frame -->
   <include file="$(find uuv_assistants)/launch/message_to_tf.launch">
     	<arg name="namespace" value="$(arg namespace)"/>
   </include>
+
+  <node name="rviz" pkg="rviz" type="rviz" output="screen"></node>
 </launch>

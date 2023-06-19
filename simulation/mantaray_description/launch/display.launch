@@ -1,0 +1,11 @@
+<launch>
+
+  <arg name="model" default="$(find mantaray_description)/robots/default.xacro"/>
+  <arg name="gui" default="true" />
+  <arg name="rvizconfig" default="$(find mantaray_description)/rviz/urdf.rviz" />
+
+  <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model)" />
+  <param name="use_gui" value="$(arg gui)"/>
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true"/>
+</launch>

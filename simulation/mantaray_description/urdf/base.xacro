@@ -28,10 +28,11 @@
   <xacro:property name="visual_mesh_file" value="file://$(find mantaray_description)/meshes/visual_base_link.stl"/>
 
   <!-- Vehicle macro -->
-  <xacro:macro name="mantaray_base" params="namespace *gazebo">
+  <xacro:macro name="mantaray_base" params="namespace *gazebo use_simplified_mesh inertial_reference_frame">
 
       <!-- Rigid body description of the base link -->
       <link name="${namespace}/base_link">
+        <parent link="world"/>
         <!--
           Be careful to setup the coefficients for the inertial tensor,
           otherwise your model will become unstable on Gazebo
