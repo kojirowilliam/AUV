@@ -61,8 +61,16 @@
   </group>
 
   <!-- Publish state and tf for in relation to the world frame -->
-  <include file="$(find uuv_assistants)/launch/message_to_tf.launch">
-    	<arg name="namespace" value="$(arg namespace)"/>
+  <!-- <include file="$(find uuv_assistants)/launch/message_to_tf.launch">
+    <arg name="namespace" value="$(arg namespace)"/>
+    <arg name="world_frame" value="$(arg world_frame)"/>
+    <arg name="child_frame_id" value="/$(arg namespace)/base_link"/>
+  </include> -->
+  
+  <include file="$(find mantaray_description)/launch/world_to_base.launch">
+    <arg name="namespace" value="$(arg namespace)"/>
+    <arg name="world_frame" value="$(arg world_frame)"/>
+    <arg name="base" value="/$(arg namespace)/base_link"/>
   </include>
 
   <!-- <node name="rviz" pkg="rviz" type="rviz" output="screen"></node> -->

@@ -32,7 +32,6 @@
 
       <!-- Rigid body description of the base link -->
       <link name="${namespace}/base_link">
-        <parent link="world"/>
         <!--
           Be careful to setup the coefficients for the inertial tensor,
           otherwise your model will become unstable on Gazebo

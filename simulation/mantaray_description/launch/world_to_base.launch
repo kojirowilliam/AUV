@@ -1,0 +1,8 @@
+<!-- A temporary launch file that creates a link between the base_link and world -->
+<launch>
+    <arg name="namespace" default="mantaray"/>
+    <arg name="world_frame" default="world"/>
+    <arg name="base" default="/$(arg namespace)/base_link"/>
+
+    <node pkg="mantaray_description" type="world_to_base.py" name="world_to_base"/>
+</launch>

@@ -2,7 +2,7 @@
 
   <arg name="model" default="$(find mantaray_description)/robots/default.xacro"/>
   <arg name="gui" default="true" />
-  <arg name="rvizconfig" default="$(find mantaray_description)/rviz/urdf.rviz" />
+  <arg name="rvizconfig" default="$(find mantaray_control)/rviz/urdf.rviz" />
 
   <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model)" />
   <param name="use_gui" value="$(arg gui)"/>
