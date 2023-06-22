@@ -124,7 +124,7 @@ void sendTransform(geometry_msgs::Pose const &pose, const std_msgs::Header& head
     tf.setRotation(tf::createQuaternionFromRPY(roll, pitch, yaw));
     addTransform(transforms, tf);
   }
-  ROS_INFO("Sending transforms");
+  // ROS_INFO("Sending transforms");
   // ROS_INFO("Frame_id: ")
   g_transform_broadcaster->sendTransform(transforms);
 
@@ -231,7 +231,7 @@ void multiCallback(topic_tools::ShapeShifter const &input) {
 }
 
 int main(int argc, char** argv) {
-  ROS_INFO("msg2tf debugging start");
+  // ROS_INFO("msg2tf debugging start");
   ros::init(argc, argv, "message_to_tf");
 
   g_footprint_frame_id = "base_footprint";
@@ -251,61 +251,61 @@ int main(int argc, char** argv) {
   priv_nh.getParam("child_frame_id", g_child_frame_id);
 
 
-  ROS_INFO("priv_nh params:");
-  ROS_INFO_STREAM("g_odometry_topic: " << g_odometry_topic);
-  ROS_INFO_STREAM("g_pose_topic: " << g_pose_topic);
-  ROS_INFO_STREAM("g_imu_topic: " << g_imu_topic);
-  ROS_INFO_STREAM("g_topic: " << g_topic);
-  ROS_INFO_STREAM("g_frame_id: " << g_frame_id);
-  ROS_INFO_STREAM("g_footprint_frame_id: " << g_footprint_frame_id);
-  ROS_INFO_STREAM("g_position_frame_id: " << g_position_frame_id);
-  ROS_INFO_STREAM("g_stabilized_frame_id: " << g_stabilized_frame_id);
-  ROS_INFO_STREAM("g_child_frame_id: " << g_child_frame_id);
-  ros::Duration(4).sleep();
-  ROS_INFO("added delay");
+  // ROS_INFO("priv_nh params:");
+  // ROS_INFO_STREAM("g_odometry_topic: " << g_odometry_topic);
+  // ROS_INFO_STREAM("g_pose_topic: " << g_pose_topic);
+  // ROS_INFO_STREAM("g_imu_topic: " << g_imu_topic);
+  // ROS_INFO_STREAM("g_topic: " << g_topic);
+  // ROS_INFO_STREAM("g_frame_id: " << g_frame_id);
+  // ROS_INFO_STREAM("g_footprint_frame_id: " << g_footprint_frame_id);
+  // ROS_INFO_STREAM("g_position_frame_id: " << g_position_frame_id);
+  // ROS_INFO_STREAM("g_stabilized_frame_id: " << g_stabilized_frame_id);
+  // ROS_INFO_STREAM("g_child_frame_id: " << g_child_frame_id);
+  // ros::Duration(4).sleep();
+  // ROS_INFO("added delay");
 
   // get topic from the commandline
   if (argc > 1) {
-      ROS_INFO("Getting topics from cmd line");
+      // ROS_INFO("Getting topics from cmd line");
       g_topic = argv[1];
       g_odometry_topic.clear();
       g_pose_topic.clear();
       g_imu_topic.clear();
   }
-  else {
-    ROS_INFO("argc <=1");
-  }
+  // else {
+  //   ROS_INFO("argc <=1");
+  // }
 
   g_publish_roll_pitch = true;
-    ROS_INFO("Getting g_publish_roll_pitch");
+  // ROS_INFO("Getting g_publish_roll_pitch");
   priv_nh.getParam("publish_roll_pitch", g_publish_roll_pitch);
 
-  ROS_INFO_STREAM("g_publish_roll_pitch: " << g_publish_roll_pitch);
+  // ROS_INFO_STREAM("g_publish_roll_pitch: " << g_publish_roll_pitch);
 
   g_tf_prefix = tf::getPrefixParam(priv_nh);
-  ROS_INFO_STREAM("g_tf_prefix: " << g_tf_prefix);
+  // ROS_INFO_STREAM("g_tf_prefix: " << g_tf_prefix);
   g_transform_broadcaster = new tf::TransformBroadcaster;
 
   ros::NodeHandle node;
   ros::Subscriber sub1, sub2, sub3, sub4;
   int subscribers = 0;
   if (!g_odometry_topic.empty()) {
-      ROS_INFO("g_odometry_topic is not empty");
+      // ROS_INFO("g_odometry_topic is not empty");
       sub1 = node.subscribe(g_odometry_topic, 10, &odomCallback);
       subscribers++;
   }
   if (!g_pose_topic.empty()) {
-      ROS_INFO("g_pose_topic is not empty");
+      // ROS_INFO("g_pose_topic is not empty");
       sub2 = node.subscribe(g_pose_topic, 10, &poseCallback);
       subscribers++;
   }
   if (!g_imu_topic.empty()) {
-      ROS_INFO("g_imu_topic is not empty");
+      // ROS_INFO("g_imu_topic is not empty");
       sub3 = node.subscribe(g_imu_topic, 10, &imuCallback);
       subscribers++;
   }
   if (!g_topic.empty()) {
-      ROS_INFO("g_topic is not empty");
+      // ROS_INFO("g_topic is not empty");
       sub4 = node.subscribe(g_topic, 10, &multiCallback);
       subscribers++;
   }
@@ -321,12 +321,12 @@ int main(int argc, char** argv) {
 
   bool publish_pose = true;
   priv_nh.getParam("publish_pose", publish_pose);
-  ROS_INFO_STREAM("publish_pose: " << publish_pose);
+  // ROS_INFO_STREAM("publish_pose: " << publish_pose);
   if (publish_pose) {
     std::string publish_pose_topic;
     priv_nh.getParam("publish_pose_topic", publish_pose_topic);
 
-    ROS_INFO_STREAM("publish_pose_topic: " << publish_pose_topic);
+    // ROS_INFO_STREAM("publish_pose_topic: " << publish_pose_topic);
     if (!publish_pose_topic.empty())
       g_pose_publisher = node.advertise<geometry_msgs::PoseStamped>(publish_pose_topic, 10);
     else
@@ -346,7 +346,7 @@ int main(int argc, char** argv) {
   }
 
   ros::spin();
-  ROS_INFO("msg2tf shutdown");
+  // ROS_INFO("msg2tf shutdown");
   delete g_transform_broadcaster;
   return 0;
 }
