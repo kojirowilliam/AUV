@@ -27,6 +27,12 @@
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </xacro:default_imu_macro>
 
+  <!-- This is a temporary sensor. Eventually we will use IMU only, especially in message_to_tf -->
+  <xacro:default_pose_3d_macro
+    namespace="${namespace}"
+    parent_link="${namespace}/base_link"
+    inertial_reference_frame="${inertial_reference_frame}" />
+
   <!-- Mount a camera  -->
   <!-- <xacro:default_camera namespace="${namespace}" parent_link="${namespace}/base_link" suffix="">
     <origin xyz="1.15 0 0.4" rpy="0 0 0"/>
