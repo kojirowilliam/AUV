@@ -27,10 +27,10 @@ from std_msgs.msg import String, Header
 # strafe: left - t0+, t4+, t5- 
 # roll: clockwise - t2+, t3+
 
-pid_forward = pid(10, 0, 0)
+pid_forward = pid(2, 0, 0)
 pid_alt = pid(0,0,0)
-pid_pitch = pid(0,0,0)
-pid_yaw = pid(50,0.01,200)
+pid_pitch = pid(50,0,100)
+pid_yaw = pid(50,0.01,300)
 pid_roll = pid(0,0,0)
 pid_strafe = pid(0,0,0)
 
@@ -113,7 +113,7 @@ def thruster_publisher():
         pub3.publish(t3)
         t4 = FloatStamped()
         t4.header.stamp = rospy.Time.now()
-        t4.data = pid_forward.get_output() + pid_yaw.get_output()
+        t4.data = -pid_forward.get_output() + pid_yaw.get_output()
         pub4.publish(t4)
         t5 = FloatStamped()
         t5.header.stamp = rospy.Time.now()
