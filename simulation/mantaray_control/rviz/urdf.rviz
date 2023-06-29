@@ -12,7 +12,7 @@ Panels:
         - /WrenchStamped7
         - /WrenchStamped8
       Splitter Ratio: 0.5
-    Tree Height: 371
+    Tree Height: 582
   - Class: rviz/Views
     Expanded:
       - /Current View1
@@ -59,6 +59,10 @@ Visualization Manager:
           Show Trail: false
           Value: true
         mantaray/imu_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        mantaray/pose_sensor_link_default:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -110,14 +114,22 @@ Visualization Manager:
       Visual Enabled: true
     - Class: rviz/TF
       Enabled: true
+      Filter (blacklist): ""
+      Filter (whitelist): ""
       Frame Timeout: 15
       Frames:
         All Enabled: true
+        mantaray/base_footprint:
+          Value: true
         mantaray/base_link:
           Value: true
         mantaray/base_link_ned:
           Value: true
+        mantaray/base_stabilized:
+          Value: true
         mantaray/imu_link:
+          Value: true
+        mantaray/pose_sensor_link_default:
           Value: true
         mantaray/thruster_0:
           Value: true
@@ -145,26 +157,33 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        mantaray/base_link:
-          mantaray/base_link_ned:
-            {}
-          mantaray/imu_link:
-            {}
-          mantaray/thruster_0:
-            {}
-          mantaray/thruster_1:
-            {}
-          mantaray/thruster_2:
-            {}
-          mantaray/thruster_3:
-            {}
-          mantaray/thruster_4:
-            {}
-          mantaray/thruster_5:
-            {}
-          mantaray/thruster_6:
-            {}
-          mantaray/thruster_7:
+        world:
+          mantaray/base_footprint:
+            mantaray/base_stabilized:
+              mantaray/base_link:
+                mantaray/base_link_ned:
+                  {}
+                mantaray/imu_link:
+                  {}
+                mantaray/pose_sensor_link_default:
+                  {}
+                mantaray/thruster_0:
+                  {}
+                mantaray/thruster_1:
+                  {}
+                mantaray/thruster_2:
+                  {}
+                mantaray/thruster_3:
+                  {}
+                mantaray/thruster_4:
+                  {}
+                mantaray/thruster_5:
+                  {}
+                mantaray/thruster_6:
+                  {}
+                mantaray/thruster_7:
+                  {}
+          world_ned:
             {}
       Update Interval: 0
       Value: true
@@ -284,7 +303,7 @@ Visualization Manager:
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: mantaray/base_link
+    Fixed Frame: world
     Frame Rate: 30
   Name: root
   Tools:
@@ -293,35 +312,35 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 2.479167938232422
+      Distance: 7.1225690841674805
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.17711687088012695
-        Y: 0.4069010019302368
-        Z: 0.1477642059326172
+        X: -0.062297213822603226
+        Y: 0.21637389063835144
+        Z: -0.14296859502792358
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.1597967147827148
+      Pitch: 0.5047973394393921
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 5.001816272735596
+      Yaw: 4.831812381744385
     Saved: ~
 Window Geometry:
   Displays:
-    collapsed: true
-  Height: 713
-  Hide Left Dock: true
+    collapsed: false
+  Height: 1052
+  Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd0000000100000000000001580000026ffc0200000002fb000000100044006900730070006c006100790073000000003d00000176000000c900fffffffb0000000a0056006900650077007300000001b9000000f3000000a400ffffff000005130000026f00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd000000010000000000000158000003c2fc0200000002fb000000100044006900730070006c006100790073010000003d000002c9000000c900fffffffb0000000a00560069006500770073010000030c000000f3000000a400ffffff00000622000003c200000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Views:
-    collapsed: true
-  Width: 1299
-  X: 67
-  Y: 27
+    collapsed: false
+  Width: 1920
+  X: 3640
+  Y: 591

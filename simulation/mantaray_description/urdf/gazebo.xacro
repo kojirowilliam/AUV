@@ -5,7 +5,7 @@
     <xacro:property name="mantaray_cob" value="0 0 0"/> <!-- Random value -->
 
     <!-- Vehicle's actual volume (Gazebo cannot compute the volume out of the mesh) -->
-    <xacro:property name="mantaray_volume" value="1.83826"/> <!-- Taken from RexRov2-->
+    <xacro:property name="mantaray_volume" value="0.0910564446"/> <!-- Taken from RexRov2-->
 
     <!-- Describing the dimensions of the vehicle's bounding box -->
     <xacro:property name="mantaray_length" value="0.629158"/> <!-- Might have mixed up length and width-->
@@ -16,7 +16,7 @@
       <!-- List of hydrodynamic models this robot's links -->
       <link name="${namespace}/base_link">
         <!-- This flag will make the link neutrally buoyant -->
-        <neutrally_buoyant>0</neutrally_buoyant>
+        <neutrally_buoyant>1</neutrally_buoyant>
 
         <!-- Link's volume -->
         <volume>${mantaray_volume}</volume>
@@ -46,12 +46,12 @@
         <hydrodynamic_model>
           <type>fossen</type>
           <added_mass> <!-- Taken from RexRov2-->
-            779.79 -6.8773 -103.32  8.5426 -165.54 -7.8033
-           -6.8773    1222   51.29  409.44 -5.8488  62.726
-           -103.32   51.29  3659.9  6.1112 -386.42  10.774
-            8.5426  409.44  6.1112   534.9 -10.027  21.019
-           -165.54 -5.8488 -386.42 -10.027  842.69 -1.1162
-           -7.8033  62.726  10.775  21.019 -1.1162  224.32
+            0 0 0 0 0 0
+            0 0 0 0 0 0
+            0 0 0 0 0 0
+            0 0 0 0 0 0
+            0 0 0 0 0 0
+            0 0 0 0 0 0
        </added_mass>
           <!--
             The linear damping coefficients can be provided as a diagonal (6 elements)
