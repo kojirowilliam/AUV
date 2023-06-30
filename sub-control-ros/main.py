@@ -28,6 +28,7 @@ def thruster_publisher(name, fsm):
     while not rospy.is_shutdown():
         for i in range(THRUSTER_COUNT):
             fs = FloatStamped()
+            fs.header.frame_id = 'world'
             fs.header.stamp = rospy.Time.now()
             fs.data = fsm.get_state().get_thrust_list()[i]
             pub[i].publish(fs)

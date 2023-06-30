@@ -15,8 +15,11 @@
 
   <xacro:property name="mass" value="22.102392"/>
   <!-- Center of gravity -->
+  <!-- <xacro:property name="cog" value="1.8 -1.17088 -1.62"/> -->
   <xacro:property name="cog" value="0.000018 -0.017088 -0.000362"/>
+
   <!-- Fluid density -->
+  <!-- <xacro:property name="rho" value="1028"/> -->
   <xacro:property name="rho" value="1028"/>
 
   <!--
@@ -47,9 +50,9 @@
         <inertial>
           <mass value="${mass}" />
           <origin xyz="${cog}" rpy="0 0 0"/>
-          <inertia ixx="1343.163" ixy="0.003" ixz="0.132" iyy="1793.012" iyz="0.084" izz="649.198"/>
+          <!-- <inertia ixx="1343.163" ixy="0.003" ixz="0.132" iyy="1793.012" iyz="0.084" izz="649.198"/> -->
 
-          <!-- <inertia ixx="1.343163" ixy="0.000003" ixz="0.000132" iyy="1.793012" iyz="0.000084" izz="0.649198"/>  -->
+          <inertia ixx="1.343163" ixy="0.000003" ixz="0.000132" iyy="1.793012" iyz="0.000084" izz="0.649198"/> 
         </inertial>
       <!-- Units are in kg * meters^2 -->
 
