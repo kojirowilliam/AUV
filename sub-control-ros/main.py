@@ -6,6 +6,7 @@ from fsm_pcontrol import fsm_pcontrol
 from uuv_gazebo_ros_plugins_msgs.msg import FloatStamped
 from nav_msgs.msg import Odometry
 from std_msgs.msg import String, Header
+import math
 
 running = True
 
@@ -17,9 +18,12 @@ sub_control_state = fsm()
 def thruster_publisher(name, fsm):
     
     rospy.init_node('ros_control', anonymous=True) 
-    sub_control_state.set_state(0)
+    sub_control_state.set_state(1)
 
     pub = []
+
+
+    sub_control_state.current_state.set_rot_target(math.radians(0),math.radians(0),math.radians(0))
 
     for i in range(THRUSTER_COUNT):
         pub.append(rospy.Publisher('/' + name + '/thrusters/'+str(i)+'/input', FloatStamped, queue_size=10))
