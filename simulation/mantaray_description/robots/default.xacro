@@ -2,12 +2,17 @@
 <robot name="mantaray" xmlns:xacro="http://www.ros.org/wiki/xacro" >
   <xacro:arg name="debug" default="0"/>
   <xacro:arg name="namespace" default="mantaray"/>
+  <xacro:arg name="use_simplified_mesh" default="false"/>
+  <xacro:arg name="inertial_reference_frame" default="world"/>
   <!-- Include the ROV macro file -->
   <xacro:include filename="$(find mantaray_description)/urdf/base.xacro"/>
   <xacro:include filename="$(find mantaray_description)/urdf/gazebo.xacro"/>
 
   <!-- Create the mantaray -->
-  <xacro:mantaray_base namespace="$(arg namespace)">
+  <xacro:mantaray_base
+    namespace="$(arg namespace)"
+    use_simplified_mesh="$(arg use_simplified_mesh)"
+    inertial_reference_frame="$(arg inertial_reference_frame)">
     <!-- The underwater object plugin is given as an input block parameter to
      allow the addition of external models of manipulator units -->
     <gazebo>

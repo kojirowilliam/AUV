@@ -33,7 +33,7 @@ class PWM_To_Thrust:
         
     #freq of cycle (hz)
     #returns a 16 bit number
-    def microseconds_to_bits(self, time, freq):
+    def microseconds_to_int16(self, time, freq):
         return time*freq*65536/1000000
     
     #assuming volts is between a and b
@@ -64,4 +64,4 @@ class PWM_To_Thrust:
         else:
             res = 1500
         
-        return round(self.microseconds_to_bits(res, self.pwm_freq))
+        return round(self.microseconds_to_int16(res, self.pwm_freq))

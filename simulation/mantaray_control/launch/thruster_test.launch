@@ -59,7 +59,7 @@
     </node>
 
     <!-- Launches the test -->
-    <node name="thruster_tester" pkg="mantaray_description" type="thruster_test" respawn="false" output="screen"/>
+    <node name="thruster_tester" pkg="mantaray_control" type="thruster_test.py" respawn="false" output="screen"/>
   </group>
 
   <!-- Publish state and tf for in relation to the world frame -->

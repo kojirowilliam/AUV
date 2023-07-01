@@ -1,0 +1,9 @@
+FROM stereolabs/zed:3.8-tools-devel-jetson-jp5.0.2
+WORKDIR /app
+COPY cpp image_capture_src
+RUN apt-get update && apt-get -y install cmake && cmake . -DBUILD_CAFFE=OFF -DGPU_MODE=CPU_ONLY && make && make install
+RUN mkdir /app/image_capture_src/build && cd /app/image_capture_src/build && \
+    cmake -DCMAKE_LIBRARY_PATH=/usr/local/cuda/lib64/stubs \
+      -DCMAKE_CXX_FLAGS="-Wl,--allow-shlib-undefined" .. && \
+    make
+CMD ["/app/image_capture_src/build/ZED_Tutorial_2"]
