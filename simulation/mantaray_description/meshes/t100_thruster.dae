@@ -5,8 +5,8 @@
       <author>Blender User</author>
       <authoring_tool>Blender 3.6.0 commit date:2023-06-27, commit time:08:08, hash:c7fc78b81ecb</authoring_tool>
     </contributor>
-    <created>2023-06-30T20:36:13</created>
-    <modified>2023-06-30T20:36:13</modified>
+    <created>2023-06-30T20:55:29</created>
+    <modified>2023-06-30T20:55:29</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -113,7 +113,7 @@
   <library_visual_scenes>
     <visual_scene id="Scene" name="Scene">
       <node id="T200-THRUSTER-R1" name="T200-THRUSTER-R1" type="NODE">
-        <matrix sid="transform">-1 8.52009e-14 1.50996e-7 0 0 -1 5.6426e-7 0 1.50996e-7 5.6426e-7 1 0 0 0 0 1</matrix>
+        <matrix sid="transform">1.94707e-7 8.02679e-7 1 0 0 -1 8.02679e-7 0 1 -1.56287e-13 -1.94707e-7 0 0 0 0 1</matrix>
         <instance_geometry url="#T200-THRUSTER-R1-mesh" name="T200-THRUSTER-R1"/>
       </node>
       <node id="Camera" name="Camera" type="NODE">
