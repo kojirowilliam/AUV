@@ -1,3 +1,4 @@
+from fsm_state import fsm_state
 from fsm_basic import fsm_basic
 from fsm_pcontrol import fsm_pcontrol
 
@@ -13,5 +14,12 @@ class fsm():
         if self.current_state.get_name() == 'pcontrol':
             return 'passive'
         
+    def run(self, dt):
+        self.current_state.run(dt)
+
     def get_state(self):
         return self.current_state
+    
+    def set_state(self, state):
+        self.current_state = self.state_list[state]
+    
