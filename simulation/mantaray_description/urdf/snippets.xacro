@@ -67,7 +67,7 @@
     <xacro:thruster_module_first_order_basic_fcn_macro
       namespace="${namespace}"
       thruster_id="${thruster_id}"
-      mesh_filename="file://$(find mantaray_description)/meshes/robdos_model_thrust.dae"
+      mesh_filename="file://$(find mantaray_description)/meshes/t100_thruster.dae"
       dyn_time_constant="0.05"  
       rotor_constant="0.026546960744430276">
       <xacro:insert_block name="origin"/>
