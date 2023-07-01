@@ -1,4 +1,5 @@
 import math
+import numpy as np
 
 def euler_from_quaternion(x, y, z, w):
         """
@@ -21,3 +22,12 @@ def euler_from_quaternion(x, y, z, w):
         yaw_z = math.atan2(t3, t4)
      
         return roll_x, pitch_y, yaw_z # in radians
+
+def euler_to_quaternion(yaw, pitch, roll):
+
+        qx = np.sin(roll/2) * np.cos(pitch/2) * np.cos(yaw/2) - np.cos(roll/2) * np.sin(pitch/2) * np.sin(yaw/2)
+        qy = np.cos(roll/2) * np.sin(pitch/2) * np.cos(yaw/2) + np.sin(roll/2) * np.cos(pitch/2) * np.sin(yaw/2)
+        qz = np.cos(roll/2) * np.cos(pitch/2) * np.sin(yaw/2) - np.sin(roll/2) * np.sin(pitch/2) * np.cos(yaw/2)
+        qw = np.cos(roll/2) * np.cos(pitch/2) * np.cos(yaw/2) + np.sin(roll/2) * np.sin(pitch/2) * np.sin(yaw/2)
+
+        return [qx, qy, qz, qw]
