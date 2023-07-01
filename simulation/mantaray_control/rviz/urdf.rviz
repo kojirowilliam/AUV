@@ -127,6 +127,8 @@ Visualization Manager:
           Value: true
         mantaray/base_stabilized:
           Value: true
+        mantaray/chassis:
+          Value: true
         mantaray/imu_link:
           Value: true
         mantaray/pose_sensor_link_default:
@@ -162,6 +164,8 @@ Visualization Manager:
             mantaray/base_stabilized:
               mantaray/base_link:
                 mantaray/base_link_ned:
+                  {}
+                mantaray/chassis:
                   {}
                 mantaray/imu_link:
                   {}
@@ -312,25 +316,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 7.1225690841674805
+      Distance: 8.655611038208008
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.062297213822603226
-        Y: 0.21637389063835144
-        Z: -0.14296859502792358
+        X: -3.6385185718536377
+        Y: 4.4284749031066895
+        Z: -20.918912887573242
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.5047973394393921
+      Pitch: -0.14520263671875
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.831812381744385
+      Yaw: 5.526824951171875
     Saved: ~
 Window Geometry:
   Displays:
