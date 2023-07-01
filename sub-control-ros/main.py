@@ -46,6 +46,7 @@ def thruster_publisher(name, fsm):
 def stop():
     print("stop")
     running = False
+    rospy.shutdown()
 
 
 
