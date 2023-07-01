@@ -12,11 +12,12 @@ running = True
 SUB_NAME = "mantaray"
 THRUSTER_COUNT = 8
 
-fsm = fsm()
+sub_control_state = fsm()
 
 def thruster_publisher(name, fsm):
     
-    rospy.init_node('lit', anonymous=True) 
+    rospy.init_node('ros_control', anonymous=True) 
+    sub_control_state.set_state(0)
 
     pub = []
 
@@ -26,11 +27,12 @@ def thruster_publisher(name, fsm):
 
     time_last = time.time()
     while not rospy.is_shutdown():
+        sub_control_state.run(100)
         for i in range(THRUSTER_COUNT):
             fs = FloatStamped()
             fs.header.frame_id = 'world'
             fs.header.stamp = rospy.Time.now()
-            fs.data = fsm.get_state().get_thrust_list()[i]
+            fs.data = sub_control_state.get_state().get_thrust_list()[i]
             pub[i].publish(fs)
 
         rate = rospy.Rate(10) # 10hz

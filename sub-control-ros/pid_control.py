@@ -10,7 +10,7 @@ class pid():
         self.error = 0
         self.derivative = 0
 
-    def set_value(self, c):
+    def set_state(self, c):
         self.value = c
     
     def get_output(self):
