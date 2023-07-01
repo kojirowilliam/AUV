@@ -16,6 +16,9 @@ class pid():
     def get_output(self):
         return self.kP*self.error+self.kI*self.integral+self.kD*self.derivative
     
+    def get_output_ff(self, kF, ff):
+        return self.kP*self.error+self.kI*self.integral+self.kD*self.derivative+kF*ff
+    
     def update(self, target, dt):
         self.error = target - self.value
         self.integral = self.integral + self.error*dt
