@@ -27,6 +27,6 @@ class QuaternionAttitudeController():
         return error_quat
     
     def get_angular_setpoint(self, setpoint, current):
-        return 2*self.kP*self.get_error_quat(setpoint, current)[0:2]
+        return 2*self.kP*self.get_error_quat(setpoint, current)[0:3]
         
         
