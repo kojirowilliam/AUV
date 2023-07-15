@@ -1,0 +1,4 @@
+<launch>
+    <node name="teleop_keyboard" pkg="mantaray_control" type="teleop_keyboard.py" required="true"/>
+
+</launch>
