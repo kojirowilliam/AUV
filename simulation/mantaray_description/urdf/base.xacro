@@ -57,7 +57,7 @@
       <!-- Units are in kg * meters^2 -->
 
         <visual name='visual'>
-          <transparency>0.8</transparency>
+          <transparency>1</transparency>
           <origin xyz="0 0 0.204636" rpy="0 0 0"/>
           <geometry>
             <mesh filename="${visual_mesh_file}" scale="1 1 1" />
