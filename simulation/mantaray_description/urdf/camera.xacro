@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+
+<!--
+// Copyright 2022 Stereolabs
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+-->
+
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  
+  <xacro:property name="M_PI"     value="3.1415926535897931" />
+  
+  <xacro:arg name="namespace"   default="mantaray" />
+  <xacro:arg name="camera_name"   default="zed" />
+  <xacro:arg name="camera_model"  default="zedm" />
+  <xacro:arg name="cam_pos_x"     default="0.0" />
+  <xacro:arg name="cam_pos_y"     default="0.4" />
+  <xacro:arg name="cam_pos_z"     default="0.2" />
+  <xacro:arg name="cam_roll"      default="0.0" />
+  <xacro:arg name="cam_pitch"     default="0.0" />
+  <xacro:arg name="cam_yaw"       default="${M_PI/2}" />
+  <xacro:arg name="gnss_frame"    default="" />
+
+  <xacro:property name="parent" value="$(arg namespace)/base_link" />
+  <xacro:property name="baseline" value="0.06" />
+  <xacro:property name="height" value="0.0265" />
+  <xacro:property name="bottom_slope" value="0.0" /> 
+  <xacro:property name="screw_offset_x" value="0.0" />
+  <xacro:property name="screw_offset_z" value="0.0" />
+  <xacro:property name="optical_offset_x" value="0.0" />
+
+  
+  <joint name="$(arg camera_name)_base_joint" type="fixed">
+    <parent link="${parent}"/>
+    <child link="$(arg namespace)/$(arg camera_name)_base_link"/>
+    <origin xyz="$(arg cam_pos_x) $(arg cam_pos_y) $(arg cam_pos_z)" rpy="$(arg cam_roll) $(arg cam_pitch) $(arg cam_yaw)"/>
+  </joint>
+  
+  <link name="$(arg namespace)/$(arg camera_name)_base_link"/>
+
+  <!-- Camera Center -->
+  <link name="$(arg namespace)/$(arg camera_name)_camera_center">
+    <visual>
+      <origin xyz="${screw_offset_x} 0 ${screw_offset_z}" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find mantaray_description)/meshes/$(arg camera_model).stl" />
+      </geometry>
+      <material name="zedm_mat">
+        <color rgba="0 0 0 0.9"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="$(arg camera_name)_camera_center_joint" type="fixed">
+    <parent link="$(arg namespace)/$(arg camera_name)_base_link"/>
+    <child link="$(arg namespace)/$(arg camera_name)_camera_center"/>
+    <origin xyz="0 0 ${height/2}" rpy="0 ${bottom_slope} 0" />
+  </joint>
+
+  <!-- Left Camera -->
+  <link name="$(arg namespace)/$(arg camera_name)_left_camera_frame" />
+  <joint name="$(arg camera_name)_left_camera_joint" type="fixed">
+    <parent link="$(arg namespace)/$(arg camera_name)_camera_center"/>
+    <child link="$(arg namespace)/$(arg camera_name)_left_camera_frame"/>
+    <origin xyz="${optical_offset_x} ${baseline/2} 0" rpy="0 0 0" />
+  </joint>
+
+  <link name="$(arg namespace)/$(arg camera_name)_left_camera_optical_frame"/>
+  <joint name="$(arg camera_name)_left_camera_optical_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="-${M_PI/2} 0.0 -${M_PI/2}"/>
+    <parent link="$(arg namespace)/$(arg camera_name)_left_camera_frame"/>
+    <child link="$(arg namespace)/$(arg camera_name)_left_camera_optical_frame"/>
+  </joint>
+
+  <!-- Right Camera -->
+  <link name="$(arg namespace)/$(arg camera_name)_right_camera_frame" />
+  <joint name="$(arg camera_name)_right_camera_joint" type="fixed">
+    <parent link="$(arg namespace)/$(arg camera_name)_camera_center"/>
+    <child link="$(arg namespace)/$(arg camera_name)_right_camera_frame"/>
+    <origin xyz="${optical_offset_x} -${baseline/2} 0" rpy="0 0 0" />
+  </joint>
+
+  <link name="$(arg namespace)/$(arg camera_name)_right_camera_optical_frame"/>
+  <joint name="$(arg camera_name)_right_camera_optical_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="-${M_PI/2} 0.0 -${M_PI/2}"/>
+    <parent link="$(arg namespace)/$(arg camera_name)_right_camera_frame"/>
+    <child link="$(arg namespace)/$(arg camera_name)_right_camera_optical_frame"/>
+  </joint>
+
+  <gazebo reference="$(arg namespace)/$(arg camera_name)_left_camera_frame">
+    <material>Gazebo/Red</material>
+    <sensor name="left_camera" type="camera">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <update_rate>10</update_rate>
+      <camera>
+        <horizontal_fov>1.089</horizontal_fov> <!-- Need to change -->
+        <image>
+          <format>R8G8B8</format> <!-- Need to change -->
+          <width>640</width>
+          <height>480</height>
+        </image>
+        <clip> <!-- Minimum and maximum range the camera can see -->
+          <near>0.04</near>
+          <far>100.0</far>
+        </clip>
+      </camera>
+      <plugin name="camera_controller" filename="libgazebo_ros_camera.so" frame_name="$(arg namespace)/$(arg camera_name)_left_camera_optical_frame"/>
+    </sensor>
+  </gazebo>
+
+</robot>

@@ -8,6 +8,9 @@
     more examples or add you own custom sensor units.
   -->
 
+  <xacro:property name="M_PI"     value="3.1415926535897931" />
+
+
   <!-- Mount a GPS. -->
   <!-- <xacro:default_gps namespace="${namespace}" parent_link="${namespace}/base_link" /> -->
 
@@ -36,16 +39,21 @@
     inertial_reference_frame="${inertial_reference_frame}" />
 
   <!-- Mount a camera  -->
-  <xacro:default_camera namespace="${namespace}" parent_link="${namespace}/base_link" suffix="">
+  <!-- <xacro:default_camera namespace="${namespace}" parent_link="${namespace}/base_link" suffix="">
     <origin xyz="0 -0.333 0.2" rpy="0 0 0"/>
-  </xacro:default_camera>
+  </xacro:default_camera> -->
+
+  <xacro:include filename="depth_camera.xacro" ns="mantaray/base_link"/>
+
+  <!-- <xacro:include filename="tutorial_camera.xacro"/> -->
+
 
   <!-- Downward Facing Camera -->
-  <!-- <xacro:default_camera
+  <xacro:default_camera
     namespace="${namespace}"
     parent_link="${namespace}/base_link"
-    suffix="right">
-    <origin xyz="1.15 -0.63 0.4" rpy="0 0.6 0.4"/>
-  </xacro:default_camera> -->
+    suffix="bottom">
+    <origin xyz="0 0 0" rpy="0 ${M_PI/2} 0"/>
+  </xacro:default_camera>
 
 </robot>

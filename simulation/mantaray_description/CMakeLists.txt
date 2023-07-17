@@ -10,8 +10,6 @@ project(mantaray_description)
 find_package(catkin REQUIRED COMPONENTS
     roscpp
     rospy
-    rosconsole
-    nodelet
     nav_msgs
     geometry_msgs
     sensor_msgs
@@ -117,12 +115,7 @@ catkin_package(
     sensor_msgs
     tf
     topic_tools
-    rosconsole
-    zed_nodelets
 )
-
-
-set(NODE_SRC ${CMAKE_CURRENT_SOURCE_DIR}/scripts/zed_wrapper_node.cpp)
 
 ###########
 ## Build ##
@@ -132,12 +125,8 @@ set(NODE_SRC ${CMAKE_CURRENT_SOURCE_DIR}/scripts/zed_wrapper_node.cpp)
 ## Your package locations should be listed before other locations
 include_directories(
     ${catkin_INCLUDE_DIRS}
-    ${CUDA_INCLUDE_DIRS}
-    ${ZED_INCLUDE_DIRS}
 )
 
-link_directories(${ZED_LIBRARY_DIR})
-link_directories(${CUDA_LIBRARY_DIRS})
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
 #   src/${PROJECT_NAME}/mantaray_description.cpp
@@ -223,32 +212,5 @@ link_directories(${CUDA_LIBRARY_DIRS})
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
-
-add_definitions(-std=c++11)
-set(LINK_LIBRARIES
-  ${catkin_LIBRARIES}
-)
-
-add_executable(zed_wrapper_node ${NODE_SRC})
-target_link_libraries(zed_wrapper_node ${LINK_LIBRARIES})
-add_dependencies(zed_wrapper_node ${catkin_EXPORTED_TARGETS})
-
-
 add_executable(message_to_tf scripts/message_to_tf.cc)
 target_link_libraries(message_to_tf ${catkin_LIBRARIES})
-
-
-FILE(GLOB_RECURSE all_files ${CMAKE_SOURCE_DIR}/*)
-add_custom_target(all_files_${PROJECT_NAME} SOURCES ${all_files})
-
-
-install(TARGETS
-  zed_wrapper_node
-  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
-install(DIRECTORY
-  launch
-  urdf
-  params
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})

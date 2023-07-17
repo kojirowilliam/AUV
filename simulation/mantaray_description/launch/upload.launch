@@ -5,7 +5,7 @@
   <!-- Vehicle's initial pose -->
   <arg name="x"     default="0"/>
   <arg name="y"     default="0"/>
-  <arg name="z"     default="-20"/>
+  <arg name="z"     default="-60"/>
   <arg name="roll"  default="0"/>
   <arg name="pitch" default="0"/>
   <arg name="yaw"   default="0"/>
@@ -67,8 +67,8 @@
     <arg name="child_frame_id" value="/$(arg namespace)/base_link"/>
   </include>
 
-  <include file="$(find mantaray_description)/launch/zedm.launch">
-  </include>
+  <!-- <include file="$(find mantaray_description)/launch/zedm.launch">
+  </include> -->
   <!-- <include file="$(find mantaray_description)/launch/world_to_base.launch">
     <arg name="namespace" value="$(arg namespace)"/>
     <arg name="world_frame" value="$(arg world_frame)"/>
