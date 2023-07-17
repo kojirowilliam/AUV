@@ -43,24 +43,24 @@
     <origin xyz="0 -0.333 0.2" rpy="0 0 0"/>
   </xacro:default_camera> -->
 
-  <!-- <xacro:include filename="depth_camera.xacro" ns="mantaray/base_link"/> -->
+  <xacro:include filename="depth_camera_simple.xacro" ns="mantaray/base_link"/>
 
-  <xacro:duo3d_camera 
+  <!-- <xacro:duo3d_camera 
     namespace="${namespace}"
     parent_link="${namespace}/base_link">
     <origin xyz="0.0 0.4 0.2" rpy="0 0 ${M_PI/2}"/>
-  </xacro:duo3d_camera>
+  </xacro:duo3d_camera> -->
 
-  <!-- <xacro:include filename="tutorial_camera.xacro"/> -->
 
 
   <!-- Downward Facing Camera -->
-  <xacro:regular_camera_plugin_macro
+  <xacro:include filename="bottom_camera.xacro"/>
+
+  <!-- <xacro:wideangle_camera
     namespace="${namespace}"
     parent_link="${namespace}/base_link"
-    suffix="bottom"
-    scale="0.2">
+    suffix="bottom">
     <origin xyz="0 0 0" rpy="0 ${M_PI/2} 0"/>
-  </xacro:regular_camera_plugin_macro>
+  </xacro:wideangle_camera> -->
 
 </robot>

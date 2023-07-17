@@ -19,6 +19,7 @@ else:
     import termios
     import tty
 
+STOP_THRUST = 1500
 
 msg = """
 Reading from the keyboard  and Publishing to FloatStamped!
@@ -141,7 +142,7 @@ class PublishThread(threading.Thread):
 
     def stop(self):
         self.done = True
-        self.update([0]*8)
+        self.update([STOP_THRUST]*8)
         self.join()
 
     def run(self):
@@ -159,7 +160,7 @@ class PublishThread(threading.Thread):
             print("Printing thruster outs")
             for i in range(self.thruster_count):
                 print(self.thrusters_data[i])
-                float_msgs[i].data = self.thrusters_data[i]
+                float_msgs[i].data = float(self.thrusters_data[i])
                 print(float_msgs[i])
             self.condition.release()
 
@@ -169,7 +170,7 @@ class PublishThread(threading.Thread):
 
         # Publish stop message when thread exits.
         for i in range(self.thruster_count):
-            float_msgs[i].data = 0
+            float_msgs[i].data = float(STOP_THRUST)
             self.publishers[i].publish(float_msgs[i])
 
 
@@ -226,7 +227,7 @@ if __name__=="__main__":
 
     try:
         pub_thread.wait_for_subscribers()
-        pub_thread.update([thruster.get_thrust() for thruster in thrusters])
+        pub_thread.update([thruster.get_pwm() for thruster in thrusters])
 
         print(msg)
         # print(vels(speed,turn))
@@ -255,7 +256,7 @@ if __name__=="__main__":
                 if (key == '\x03'):
                     break
 
-            pub_thread.update([thruster.get_thrust() for thruster in thrusters])
+            pub_thread.update([thruster.get_pwm() for thruster in thrusters])
 
     except Exception as e:
         print(e)

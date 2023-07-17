@@ -115,7 +115,9 @@
           <far>100.0</far>
         </clip>
       </camera>
-      <plugin name="camera_controller" filename="libgazebo_ros_camera.so" frame_name="$(arg namespace)/$(arg camera_name)_left_camera_optical_frame"/>
+      <plugin name="camera_controller" filename="libgazebo_ros_camera.so" frame_name="$(arg namespace)/$(arg camera_name)_left_camera_optical_frame">
+        
+      </plugin>
     </sensor>
   </gazebo>
 
