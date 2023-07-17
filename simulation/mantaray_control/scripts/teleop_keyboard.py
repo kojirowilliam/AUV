@@ -8,6 +8,7 @@ import threading
 import rospy
 
 from uuv_gazebo_ros_plugins_msgs.msg import FloatStamped
+from thruster import Thruster
 
 import sys
 from select import select
@@ -100,31 +101,8 @@ speedBindings={
         'I':(0,0,0,0,0,0,0,-1)
     }
 
-class Thruster():
-    def __init__(self, set_speed, max_speed, speed_increment):
-        self.simple_speed = set_speed
-        self.max_speed = max_speed
-        self.speed_increment = speed_increment
-        self.current_speed = 0
-
-    def change_speed(self, sign=1):
-        self.current_speed = self.current_speed + self.speed_increment*sign
-        if self.current_speed > self.max_speed : self.current_speed = self.max_speed
-        elif self.current_speed < -self.max_speed : self.current_speed = -self.max_speed
-    
-    def set_speed(self, sign=1):
-        if sign == 0: return
-        self.current_speed = self.simple_speed * sign
-
-    def stop(self):
-        self.current_speed = 0
-    
-    def get_speed(self):
-        return self.current_speed
-    
-
 class PublishThread(threading.Thread):
-    def __init__(self, rate, namespace, thruster_count, speed, set_speed, max_speed):
+    def __init__(self, rate, namespace, thruster_count):
         super(PublishThread, self).__init__()
         self.namespace = namespace
         self.thruster_count = thruster_count
@@ -230,16 +208,16 @@ if __name__=="__main__":
 
     namespace = rospy.get_param("~ns", 'mantaray')
     thruster_count = rospy.get_param("thruster_count", 8)
-    speed = rospy.get_param("~speed", 1)
-    set_speed = rospy.get_param("~set_speed", 50)
-    speed_limit = rospy.get_param("~speed_limit", 100)
+    speed = rospy.get_param("~speed", 0.1)
+    simple_thrust = rospy.get_param("~simple_thrust", 0.5)
+    saturation = rospy.get_param("~speed_limit", 2)
     repeat = rospy.get_param("~repeat_rate", 0.0)
     key_timeout = rospy.get_param("~key_timeout", 0.5)
     float_frame = rospy.get_param("~frame_id", '')
 
-    pub_thread = PublishThread(repeat, namespace, thruster_count, speed, set_speed, speed_limit)
+    pub_thread = PublishThread(repeat, namespace, thruster_count)
 
-    thrusters = [Thruster(set_speed, speed_limit, speed) for i in range(thruster_count)]
+    thrusters = [Thruster(saturation) for i in range(thruster_count)]
     x = 0
     y = 0
     z = 0
@@ -248,7 +226,7 @@ if __name__=="__main__":
 
     try:
         pub_thread.wait_for_subscribers()
-        pub_thread.update([thruster.get_speed() for thruster in thrusters])
+        pub_thread.update([thruster.get_thrust() for thruster in thrusters])
 
         print(msg)
         # print(vels(speed,turn))
@@ -257,11 +235,14 @@ if __name__=="__main__":
 
             if key in moveBindings.keys():
                 for i in range(thruster_count):
-                    thrusters[i].set_speed(moveBindings[key][i]) if moveBindings[key][i] != None else thrusters[i].stop()
+                    if (moveBindings[key][i] == None):
+                        thrusters[i].reset()
+                    elif (moveBindings[key][i] != 0):
+                        thrusters[i].set_thrust(moveBindings[key][i] * simple_thrust)
             elif key in speedBindings.keys():
                 for i in range(thruster_count):
                     if speedBindings[key][i]:
-                        thrusters[i].change_speed(speedBindings[key][i])
+                        thrusters[i].add_thrust(speedBindings[key][i] * speed)
             else:
                 # Skip updating cmd_vel if key timeout and robot already
                 # stopped.
@@ -274,7 +255,7 @@ if __name__=="__main__":
                 if (key == '\x03'):
                     break
 
-            pub_thread.update([thruster.get_speed() for thruster in thrusters])
+            pub_thread.update([thruster.get_thrust() for thruster in thrusters])
 
     except Exception as e:
         print(e)

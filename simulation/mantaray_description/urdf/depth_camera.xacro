@@ -14,9 +14,11 @@
   <xacro:arg name="cam_roll"      default="0.0" />
   <xacro:arg name="cam_pitch"     default="0.0" />
   <xacro:arg name="cam_yaw"       default="${M_PI/2}" />
+  <xacro:arg name="frame_id" value="$(arg namespace)/base_link" />
   <xacro:arg name="gnss_frame"    default="" />
 
   <xacro:property name="parent" value="$(arg namespace)/base_link" />
+  <xacro:property name="frame_id" value="$(arg namespace)/base_link" />
   <xacro:property name="baseline" value="0.06" />
   <xacro:property name="height" value="0.0265" />
   <xacro:property name="bottom_slope" value="0.0" /> 

@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 '''
 A Quaternion-Based PID controller (Or at least my shitty attempt at making one)
 
@@ -13,3 +15,22 @@ requires using the
 Then I'll create one that controls the pitch of the sub.
 Finally, I'll create one that controls the yaw of the sub.
 '''
+
+import rospy
+import time
+
+NS = "mantaray"
+THRUSTERS_COUNT = 8
+
+class QP_Controller():
+    def __init__(self, kp, saturation, thrusters):
+        pass
+
+    def load_config(config="config.yaml"):
+        pass
+
+    def update(self):
+        pass
+
+if __name__ == "__main__":
+    pass
