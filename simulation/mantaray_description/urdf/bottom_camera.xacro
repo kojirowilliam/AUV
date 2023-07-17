@@ -4,7 +4,7 @@
   <joint name="camera_joint" type="fixed">
     <parent link="mantaray/base_link"/>
     <child link="camera_link"/>
-    <origin xyz="0 0 0" rpy="0 ${pi/2} 0"/>
+    <origin xyz="0 0 0.1" rpy="0 ${pi/2} 0"/>
   </joint>
 
   <link name="camera_link">
@@ -48,6 +48,7 @@
           </camera>
           <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
               <frame_name>camera_link_optical</frame_name>
+              <imageTopicName>bottom_camera</imageTopicName>
           </plugin>
       </sensor>
   </gazebo>
