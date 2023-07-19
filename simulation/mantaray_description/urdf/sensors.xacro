@@ -68,10 +68,10 @@
     namespace="${namespace}"
     suffix=""
     parent_link="${namespace}/base_link"
-    topic="a50_dvl"
+    topic="dvl"
     scale="0.9"
     update_rate = "10"
-    reference_frame="${namespace}/base_link"
+    reference_frame="world"
     noise_sigma="0.001"
     noise_amplitude="0"
   >
