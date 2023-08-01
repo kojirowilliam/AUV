@@ -1,6 +1,6 @@
 import numpy as np
 
-class KalmanFilter():
+class kalmanfilter():
     
     # A: state transition matrix
     # B: control input matrix
@@ -19,7 +19,8 @@ class KalmanFilter():
     def update(self, H, U, Z, Q, R, dt):
         
         # create transition matrix for a xyzrpy constant acceleration model
-        self.A = np.array([  [1, 0, 0, 0, 0, 0, dt, 0, 0, 0, 0, 0, 0.5*dt**2, 0, 0, 0, 0, 0],
+        self.A = np.array([  
+                [1, 0, 0, 0, 0, 0, dt, 0, 0, 0, 0, 0, 0.5*dt**2, 0, 0, 0, 0, 0],
                 [0, 1, 0, 0, 0, 0, 0, dt, 0, 0, 0, 0, 0, 0.5*dt**2, 0, 0, 0, 0],
                 [0, 0, 1, 0, 0, 0, 0, 0, dt, 0, 0, 0, 0, 0, 0.5*dt**2, 0, 0, 0],
                 [0, 0, 0, 1, 0, 0, 0, 0, 0, dt, 0, 0, 0, 0, 0, 0.5*dt**2, 0, 0],
@@ -46,6 +47,19 @@ class KalmanFilter():
         
         self.X_ = X_
         self.P_ = P_
+
+    
+    def get_rpy_vel(self):
+        return [self.X_[9],self.X_[10], self.X_[11]]
+
+    def get_rpy(self):
+        return [self.X_[3], self.X_[4], self.X_[5]]
+
+    def get_xyz(self):
+        return [self.X_[0], self.X_[1], self.X_[2]]
+
+    def get_xyz_vel(self):
+        return [self.X_[6], self.X_[7], self.X_[8]]
         
         
 
@@ -79,29 +93,14 @@ B = np.array([  [0, 0, 0, 0, 0, 0, 0, 0],
                 
 
 
-# initialize Q
-Q = np.eye(18)*0.1
-
 # initialize P
 P = np.eye(18)*0.1
 
-# initialize R for the imu
-R_imu = np.eye(6)*0.1
+
 
 # initialize R for the dvl
 R_dvl = np.eye(3)*0.1
 
-# initialize H for the imu
-
-H_imu = np.array([  [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], # roll
-                    [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], # pitch
-                    [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], # yaw
-                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0], # roll rate
-                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0], # pitch rate
-                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0], # yaw rate
-                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0], # x accel
-                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0], # y accel
-                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]])# z accel
 
 # initialize H for the DVL
 
@@ -110,4 +109,4 @@ H_dvl = np.array([  [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 ,0, 0, 0, 0, 0, 0, 0], # x 
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 ,0, 0, 0, 0, 0, 0, 0]])# z velocity
 
               
-kf.update(H, U, Z, Q, R_imu, dt)
+
