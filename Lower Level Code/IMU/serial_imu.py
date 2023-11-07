@@ -86,7 +86,7 @@ class magnetometerSensor(sensor):
 # barometer - hPa (11) 
 
 
-serialObj = MySerial('/dev/tty.usbmodem1234567899992', 115200, bytesize=8, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE,
+serialObj = MySerial('/dev/ttyACM0', 115200, bytesize=8, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE,
                           rtscts=1)
 cache = []
 
